@@ -15,7 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.http.response import HttpResponse, JsonResponse
+
+def helloworld(request):
+    return HttpResponse("Hello, world!")
+
+def helloworld_json(request):
+    return HttpResponse({"message" : "Hello, world!"})
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("", helloworld ),
+    path("json/", helloworld_json)
 ]
+#라우팅 
