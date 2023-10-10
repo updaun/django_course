@@ -1,3 +1,3 @@
 # Django Course
 
-## branch : KTR
+## branch : ktr
