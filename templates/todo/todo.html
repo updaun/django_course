@@ -1,0 +1,11 @@
+<h1>Todo List</h1>
+<br> django template
+<br> {{ todos }}
+<br> {% for todo in todos %} {{ todo }} {% comment %} __str__ -> name {% endcomment %}
+<br> {{ todo.name }}
+<br> {{ todo.discription }}
+<br> {{ todo.complete }}
+<br> {{ todo.created_at }} {% endfor %}
+<br> {{ todo }}
+<br> {{ first }}
+<br> {{ last }}
