@@ -15,11 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import hello_world_json, hello_World
+from . import views
+
+# from .views import (
+#     hello_world_json, 
+#     hello_World, 
+#     RandomNumberView,
+#     )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", hello_World),
-    path("json/", hello_world_json),
-    path("todo/", include("todo.urls"))
+    path("", views.hello_World),
+    path("json/", views.hello_world_json),
+    path("todo/", include("todo.urls")),
+    path("random/template/", views.RandomNumberTemplateView.as_view()), #클래스일 때는 이걸 해줘야함!!!
+    path("random/view/", views.RandomNumberView.as_view()),
 ]

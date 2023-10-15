@@ -1,0 +1,20 @@
+<h1>kill me</h1>
+i just want to set the world on fire<br/>
+{{todos}}<br/>
+
+{% for todo in todos %}
+    {{todo}} == {{todo.name}} <br>
+    {% if todo.description %}
+        {{ todo.description}}
+    {% else %}
+        No description
+    {% endif %}
+    <br>
+    {{todo.complete}} <br>
+    {{todo.created_at}} <br>
+{% endfor %}
+
+
+{{todo}}<br/>
+{{first}}<br/>
+{{last}}
