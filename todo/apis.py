@@ -1,4 +1,4 @@
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.views import APIView
 from rest_framework.response import Response    
 from .serializers import TodoSerializer
@@ -21,6 +21,7 @@ class TodoListAPI(APIView):
         print(serializer.data)
         return Response(serializer.data)
 
+
 class TodoRetrieveAPI(APIView):
     
     def get(self, request, pk):
@@ -31,6 +32,7 @@ class TodoRetrieveAPI(APIView):
             return Response({"error:":"해당하는 todo가 없습니다."}, status=status.HTTP_404_NOT_FOUND)
         serializer = TodoSerializer(todo)
         return Response(serializer.data)
+   
     
 class TodoUpdateAPI(APIView):
     
@@ -56,6 +58,7 @@ class TodoUpdateAPI(APIView):
         serializer= TodoSerializer(todo)
         return Response(serializer.data)
 
+
 class TodoDeleteAPI(APIView):
     
     def delete(self, request, pk):
@@ -65,3 +68,15 @@ class TodoDeleteAPI(APIView):
             return Response({"error:":"해당하는 todo가 없습니다."}, status=status.HTTP_404_NOT_FOUND)
         todo.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    
+class TodoGenericsCreateApi(generics.CreateAPIView):
+    serializer_class = TodoSerializer
+    
+class TodoGenericsListAPI(generics.ListAPIView):
+    queryset = Todo.object.all()
+    serializer_class = TodoSerializer
+    
+class TodoGenericsListCreateAPI(generics.ListCreateAPIView):
+    queryset = Todo.object.all()
+    serializer_class = TodoSerializer
