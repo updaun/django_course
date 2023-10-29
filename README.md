@@ -1,3 +1,9 @@
 # Django Course
 
-# branch : cjh
+## branch : cjh
+
+
+## User Guide
+```bash
+pip install -r requirement.txt
+```
