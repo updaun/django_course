@@ -15,7 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.http.response import HttpResponse,JsonResponse
+from .views import hello_world,hello_world_jason
+#views.py->views에서(=from) hello_world, helloworld_json을 데려온다(=import한다)
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("",hello_world),
+    path("json/",hello_world_jason)
 ]
