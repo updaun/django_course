@@ -9,4 +9,21 @@ def todo_list(request):
    return render(request,"todo.html", {"todos": todos}) 
 
 
+
+def todo_detail(request, pk):
+  
+  try:
+    todo = Todo.objects.get(id=pk)
+  except Todo.DoesNotExist: # 예외처리
+    return HttpResponse("없는 페이지입니다.", status=484)
+    
+  
+  return render(request, "todo.html", {"todo": todo})
  # return HttpResponse("Todo list")
+ 
+ 
+def todo_detail_name(request, name):
+  todo = Todo.objects.filter(name__icontains=name)
+  first = todo.first()
+  return render(request, "todo.html", {"todo": todo, "first" : first,})
+  
