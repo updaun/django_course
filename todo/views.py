@@ -6,7 +6,13 @@ from .models import Todo
 # Create your views here.
 def todo_list(request):
    todos = Todo.objects.all() 
-   return render(request,"todo.html", {"todos": todos}) 
+   
+   search = request.GET.get("search")  # None
+   
+   if search:
+     todo = todo.filter(name_icontains = search)
+   
+   return render(request,"todo/todo.html", {"todos": todos}) 
 
 
 
@@ -18,12 +24,12 @@ def todo_detail(request, pk):
     return HttpResponse("없는 페이지입니다.", status=484)
     
   
-  return render(request, "todo.html", {"todo": todo})
+  return render(request, "todo/todo.html", {"todo": todo})
  # return HttpResponse("Todo list")
  
  
 def todo_detail_name(request, name):
   todo = Todo.objects.filter(name__icontains=name)
   first = todo.first()
-  return render(request, "todo.html", {"todo": todo, "first" : first,})
+  return render(request, "todo/todo.html", {"todo": todo, "first" : first,})
   

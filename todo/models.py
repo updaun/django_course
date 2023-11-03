@@ -8,8 +8,8 @@ class Todo(models.Model):
     exp = models.PositiveIntegerField(default=0)
     completed_at = models.DateTimeField(null = True,blank = True)
     created_at = models.DateTimeField(auto_now_add=True)
-    uqdate_at = models.DateTimeField(auto_now=True)
-'''
+    updated_at = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return self.name
-'''
+
