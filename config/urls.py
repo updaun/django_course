@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import hello_world
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', hello_world), # 127.0.0.1:8000/
+    path("", views.hello_world), # 127.0.0.1:8000/
     path("todo/", include("todo.urls")), # 127.0.0.1:8000/todo/
+    path("random/template/", views.RandomNumberTemplateView.as_view()),
+    path("random/view/", views.RandomNumberView.as_view()),
 ]
