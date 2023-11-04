@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="box">
+
+    <h2>Todo List Page</h2>
+
+    {% for todo in todo_list %}
+
+    <div class="listbox">
+        <a href="{% url 'todo:detail' pk=todo.id %}">
+            {{todo.title}}
+        </a>
+    </div>
+
+    {% endfor %}
+
+    
+    <div class="btn-box">
+        <button type="submit" id="create-btn" onclick="location.replace('/todo/create/')">create</button>
+    </div>
+
+</div>
+
+
+
+{% endblock %}

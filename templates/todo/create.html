@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+    <h1>Todo Create</h1>
+
+    <div class="container">
+        <h2>Create a New Todo</h2>
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" name="name" id="name">
+            </div>
+            <div>
+                <label for="description">Description:</label>
+                <textarea name="description" id="description"></textarea>
+            </div>
+            <div>
+                <label for="complete">Complete:</label>
+                <input type="checkbox" name="complete" id="complete">
+            </div>
+            <div>
+                <label for="exp">Experience Points:</label>
+                <input type="number" name="exp" id="exp" min="0">
+            </div>
+            <button type="submit" id="todoCreate">Create</button>
+    </div>
+
+
+    <script>
+        // 버튼이 클릭된다면
+        $("#todoCreate").on("click", function() {
+            console.log($("#complete").val() === "on");
+            axiosInstance.post("/api/todo/create/", {
+                name: $("#name").val(),
+                description: $("#description").val(),
+                complete: $("#complete").val() === "on",
+                exp: $("#exp").val(),
+            })
+            .then(function(response) {
+                window.location.href = "/todo/list/";
+            })
+            .catch(function(error) {
+                console.log(error)
+                alert("Todo 생성에 실패했습니다.");
+            })
+        })
+        // axios를 이용해서 post 요청을 보낸다.
+
+        
+    </script>
+
+{% endblock %}
