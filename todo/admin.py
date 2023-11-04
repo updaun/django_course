@@ -6,6 +6,7 @@ from .models import Todo
 class TodoAdmin(admin.ModelAdmin):
     list_display = (
         "__str__",
+        "id",
         "created_at",
         "updated_at",
     )

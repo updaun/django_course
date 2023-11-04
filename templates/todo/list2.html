@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="todocontainer">
+        <h1>Todo List</h1>
+        <button class="todoCreate" onclick="window.location.href='/todo/create/'">Todo 등록하기</button>
+        
+</div>
+
+<script>
+    $(document).ready(function(){
+        axiosInstance.get("/api/todo/list/")
+        .then(function(response){
+            for (var i = 0; i < response.data.length; i++){
+                var todo = response.data[i]
+                var todoElement = `
+                    <div class="todo-item" onclick="detailView(${todo.id})">
+                        <p><strong>Name:</strong>${todo.name}</p>
+                        <p><strong>Description:</strong> ${ todo.description }</p>
+                        <p><strong>Complete:</strong> ${ todo.complete }</p>
+                        <p><strong>Completed At:</strong> ${ todo.complete_at }</p>
+                        <p><strong>Experience Points:</strong> ${ todo.exp }</p>
+                    </div>
+                    `
+                $(".todocontainer").append(todoElement)
+            }
+        })
+        .catch(function(error){
+            console.log(error)
+        })
+
+    })
+    function detailView(id){
+        window.location.href = `/todo/${id}/`;
+    }
+</script>
+
+{% endblock %}
