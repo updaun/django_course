@@ -16,7 +16,7 @@ class TodoCreateAPI(APIView):
 class TodoListAPI(APIView):
     
     def get(self, request):
-        todos = Todo.objects.all()
+        todos = Todo.objects.all().order_by("-created_at")
         serializer = TodoSerializer(todos, many=True)
         return Response(serializer.data)
 
@@ -99,7 +99,7 @@ class TodoGenericsRetrieveUpdateDeleteAPI(generics.RetrieveUpdateDestroyAPIView)
 
 
 class TodoViewSet(viewsets.ModelViewSet):
-    queryset = Todo.objects.all()
+    queryset = Todo.objects.all().order_by("-created_at")
     serializer_class = TodoSerializer
 
 

@@ -46,19 +46,21 @@ class TodoCreateView(View):
     def get(self, request):
         return render(request, "todo/create.html")
 
+class TodoListView(View):
+
+    def get(self, request):
+        # todos = Todo.objects.all()
+        return render(request, "todo/list2.html")
+
+
 class TodoDetailView(View):
-    
+
     def get(self, request, pk):
         return render(request, "todo/detail.html")
 
-class TodoListView(View):
-    
-    def get(self, request):
-        todos = Todo.objects.all()
-        return render(request, "todo/list.html", {"todos", todos})
 
 class TodoUpdateView(View):
-    
-    def get(self, request):
+
+    def get(self, request, pk):
         return render(request, "todo/update.html")
     

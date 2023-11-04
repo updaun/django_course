@@ -4,10 +4,10 @@
 
 {% block content %}
 
-    <h1>Todo Create</h1>
+    <h1>Todo Update</h1>
 
     <div class="container">
-        <h2>Create a New Todo</h2>
+        <h2>Update Your Todo</h2>
             <div>
                 <label for="name">Name:</label>
                 <input type="text" name="name" id="name">
@@ -24,34 +24,48 @@
                 <label for="exp">Experience Points:</label>
                 <input type="number" name="exp" id="exp" min="0">
             </div>
-            <button type="submit" id="todoCreate">Create</button>
+            <button type="submit" id="todoUpdate">Update</button>
     </div>
 
 
     <script>
+
+        // 페이지 로드시 값을 넣어준다.
+        $(document).ready(function(){
+            let pk = window.location.href.split('/').filter(Boolean).pop()
+            axiosInstance.get(`/api/todo/viewsets/${pk}/`)
+            .then(
+                function(response){
+                    todo = response.data;
+                    $("#name").val(todo.name);
+                    $("#description").val(todo.description);
+                    $("#complete").prop("checked", todo.complete);
+                    $("#exp").val(todo.exp);
+                }
+            )
+        })
+
+
         // 버튼이 클릭된다면
-        $("#todoCreate").on("click", function() {
-            let exp = $("#exp").val();
-            if (exp === ""){
-                exp = 0;
-            }
-            axiosInstance.post("/api/todo/create/", {
+        $("#todoUpdate").on("click", function() {
+            let pk = window.location.href.split('/').filter(Boolean).pop();
+            axiosInstance.patch(`/api/todo/viewsets/${pk}/`, {
                 name: $("#name").val(),
                 description: $("#description").val(),
                 complete: $("#complete").prop("checked"),
-                exp: exp,
+                exp: $("#exp").val(),
             })
             .then(function(response) {
-                window.location.href = "/todo/list/";
+                window.location.href = `/todo/${pk}/`;
             })
             .catch(function(error) {
                 console.log(error)
-                alert("Todo 생성에 실패했습니다.");
+                alert("Todo 수정에 실패했습니다.");
             })
         })
         // axios를 이용해서 post 요청을 보낸다.
 
-        
+
     </script>
 
 {% endblock %}

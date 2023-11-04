@@ -1,44 +1,19 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  <!-- jQuery -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!DOCTYPE html>
+<html lang="ko">
 
-  <style>
-    .todowrap{display: flex; justify-content: center; align-items: center;}
-    .todowrap .box{box-shadow: 1em 0 2em rgb(0 0 0 / 20%); border-radius: 5px; padding: 30px;}
-    .todowrap .box h2{font-weight: 100;   text-align: center; margin-bottom: 3rem;}
-    .todowrap .box #title{ width: 95%; border: 1px solid #222; padding:10px; border-radius: 5px;}
-    .box div{display: flex;}
-    .sm-box p{margin-right: 2rem;}
-    textarea{width: 95%;padding:10px; height: 6.25em;resize: none; margin-top: 2rem; border-radius: 5px;}
-    button{width:120px;height: 40px;color:#fff;background: #004fff;font-size: 16px;border:none;border-radius: 20px;cursor: pointer;}
-    .btn-box{justify-content: end;}
+{% include 'head.html' %}
 
-    .des_wrap{padding:10px; background: #d9d9d97d; border-radius:5px; margin-bottom:2rem;}
-    #delete-btn { background: #E40F18;}
-    .list_title{background: #d9d9d97d; border-radius: 5px;padding: 9px;}
+<body>
 
-    .listbox{
-      display: flex;
-      flex-direction: row;
-      width: 350px;
-      border-bottom: 1px solid #456EFE;
-      margin-bottom: 1.3rem;
-  }
-  .listbox a{color: black;  margin-bottom: 0.5rem;font-size:16px;text-decoration-line: none;}
-  </style>
+{% include 'header.html' %}
 
-</head>
 
-<body class="todowrap">
+{% block content %}
 
-{% block content %}   
 {% endblock %}
+
+
+{% include 'footer.html' %}
 
 </body>
 

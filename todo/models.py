@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 class Todo(models.Model):
@@ -12,4 +13,11 @@ class Todo(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if self.complete and self.completed_at is None:
+            self.completed_at = timezone.now()
+        if not self.complete and self.completed_at is not None:
+            self.completed_at = None
+        super().save(*args, **kwargs)
 
