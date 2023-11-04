@@ -7,6 +7,9 @@ from . import views
 urlpatterns = [
     path("create/", TOdoCreateAPI.as_view()),
     path("list/", TodoListAPI.as_view()),
+    path("retrieve/<int:pk>/", TodoRetrieveAPI.as_view()),
+    path("update/<int:pk>/", TodoUpdateAPI.as_view()),
+    path("delete/<int:pk>/", TodoDeleteAPI.as_view()),
     path("list/",views.todo_list), #127.0.0.1:8000/todo/list/
     path("<int:pk>/",views.todo_detail), #127.0.0.1:8000/todo/<int:pk>/
     path("<str:name>/",views.todo_detail_name),
