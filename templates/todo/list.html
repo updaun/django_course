@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="todocontainer">
+        <h1>Todo List</h1>
+        {% for todo in todos %}
+            <div class="todo-item">
+                <p><strong>Name:</strong> {{ todo.name }}</p>
+                <p><strong>Description:</strong> {{ todo.description }}</p>
+                <p><strong>Complete:</strong> {{ todo.complete }}</p>
+                <p><strong>Completed At:</strong> {{ todo.complete_at }}</p>
+                <p><strong>Experience Points:</strong> {{ todo.exp }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
