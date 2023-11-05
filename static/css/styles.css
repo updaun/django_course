@@ -84,3 +84,44 @@ h1 {
 .todoDelete:hover {
     background-color: coral;
 }
+
+.header {
+    background-color: #007bff;
+    /* 배경색 */
+    color: #fff;
+    /* 글자색 */
+    padding: 20px;
+    /* 내부 여백 */
+    text-align: center;
+    /* 텍스트 가운데 정렬 */
+}
+
+.header h1 {
+    margin: 0;
+    /* 헤더 제목 위 아래 여백 제거 */
+    font-size: 24px;
+    /* 글자 크기 */
+}
+
+.footer {
+    background-color: #333;
+    /* 배경색 */
+    color: #fff;
+    /* 글자색 */
+    padding: 20px;
+    /* 내부 여백 */
+    text-align: center;
+    /* 텍스트 가운데 정렬 */
+}
+
+.footer a {
+    color: #fff;
+    /* 링크 글자색 */
+    text-decoration: none;
+    /* 밑줄 제거 */
+}
+
+.footer a:hover {
+    text-decoration: underline;
+    /* 호버 시 밑줄 표시 */
+}
