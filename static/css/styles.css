@@ -92,8 +92,9 @@ h1 {
     /* 글자색 */
     padding: 20px;
     /* 내부 여백 */
-    text-align: center;
-    /* 텍스트 가운데 정렬 */
+    display: flex;
+    justify-content: space-between;
+    /* 로그인 버튼과 로그아웃 버튼을 우측에 정렬 */
 }
 
 .header h1 {
@@ -101,6 +102,16 @@ h1 {
     /* 헤더 제목 위 아래 여백 제거 */
     font-size: 24px;
     /* 글자 크기 */
+}
+
+.header .user-actions {
+    display: flex;
+}
+
+.header .user-actions a {
+    color: #fff;
+    margin-left: 10px;
+    /* 로그인 버튼과 로그아웃 버튼 사이 여백 */
 }
 
 .footer {
