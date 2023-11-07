@@ -13,6 +13,7 @@ label {
     font-weight: bold;
 }
 
+.container
 .todocontainer {
     max-width: 800px;
     margin: 0 auto;
