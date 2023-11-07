@@ -137,9 +137,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES":[
+        "rest_framework.authentication.SessionAuthentication",
+    ],
     "DEFAULT_PAGINATION_CLASS":"api.pagination.CustomPageNumberPagination",
     "PAGE_SIZE":10,
 }
 
+LOGIN_URL = "/api-auth/login/"
 LOGIN_REDIRECT_URL = "/todo/list/"
 LOGOUT_REDIRECT_URL = "/api-auth/login/"

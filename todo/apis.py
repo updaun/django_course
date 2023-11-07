@@ -3,6 +3,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import TodoSerializer
 from .models import Todo
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 
 class TodoCreateAPI(APIView):
@@ -103,6 +105,47 @@ class TodoGenericsRetrieveUpdateDeleteAPI(generics.RetrieveUpdateDestroyAPIView)
     serializer_class = TodoSerializer
 
 
+# 개인화된 API
 class TodoViewSet(viewsets.ModelViewSet):
     queryset = Todo.objects.all().order_by("-created_at")
     serializer_class = TodoSerializer
+    permission_classes = (IsAuthenticated,)
+
+    # 본인의 todo만 조회, listapi, retrieveapi, destroyapi
+    def get_queryset(self):
+        queryset = self.queryset
+        user = self.request.user
+        return queryset.filter(user=user)
+    
+    # 상세조회 retrieve
+    # todo/100/
+    # [200, 203, 204]   100번을 요청? -> 404 Not Found
+
+    def perform_create(self, serializer):
+        instance = serializer.save(user=self.request.user)
+        return instance
+    
+    def create(self, request, *args, **kwargs):
+        user = request.user
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        todo = self.perform_create(serializer)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    def perfrom_update(self, serializer):
+        instance = serializer.save(user=self.request.user)
+        return instance
+    
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        todo = self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            # If 'prefetch_related' has been applied to a queryset, we need to
+            # forcibly invalidate the prefetch cache on the instance.
+            instance._prefetched_objects_cache = {}
+
+        return Response(serializer.data)

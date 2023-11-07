@@ -35,7 +35,7 @@
             if (exp === ""){
                 exp = 0;
             }
-            axiosInstance.post("/api/todo/create/", {
+            axiosInstance.post("/api/todo/viewsets/", {
                 name: $("#name").val(),
                 description: $("#description").val(),
                 complete: $("#complete").prop("checked"),
