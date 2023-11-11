@@ -132,7 +132,7 @@ class TodoViewSet(viewsets.ModelViewSet):
         todo = self.perform_create(serializer)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
-    def perfrom_update(self, serializer):
+    def perform_update(self, serializer):
         instance = serializer.save(user=self.request.user)
         return instance
     
