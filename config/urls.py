@@ -22,9 +22,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", views.helloworld ),
     path("todo/", include("todo.urls")), 
+    path("api/todo/", include("todo.api_urls")),
     path("random/", views.RandomNumberTemplateView.as_view()),  
     path("random/view/", views.RandomNumberView.as_view()),
-    
     
 
 ]   

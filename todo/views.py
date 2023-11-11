@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from .models import Todo
-
+from django.views import View
 
 # Create your views here.
 def todo_list(request):
@@ -32,4 +32,11 @@ def todo_detail_name(request, name):
   todo = Todo.objects.filter(name__icontains=name)
   first = todo.first()
   return render(request, "todo/todo.html", {"todo": todo, "first" : first,})
+  
+
+
+class TodoCreateView(View):
+  
+  def get(self, request):
+    return render(request, "todo/create.html")
   
