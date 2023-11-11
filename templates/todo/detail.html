@@ -2,6 +2,7 @@
 {% block content %}
 
     <div class="todoDetail">
+        <button class="toList" onclick="window.location.href='/todo/list'">뒤로가기</button>
     </div>
 
     <div class="btnList">
@@ -21,8 +22,8 @@
                     <div class="todo-item">
                         <p><strong>Name:</strong>${todo.name}</p>
                         <p><strong>Description:</strong> ${ todo.description }</p>
-                        <p><strong>Complete:</strong> ${ todo.complete }</p>
-                        <p><strong>Completed At:</strong> ${ todo.complete_at }</p>
+                        <p><strong>Complete:</strong> ${ todo.complete ? "완료" : "진행중" }</p>
+                        <p><strong>Completed At:</strong> ${ datetimeToString(todo.completed_at) }</p>
                         <p><strong>Experience Points:</strong> ${ todo.exp }</p>
                     </div>
                 `)

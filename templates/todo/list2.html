@@ -14,15 +14,31 @@
         .then(function(response){
             for (var i = 0; i < response.data.length; i++){
                 var todo = response.data[i]
-                var todoElement = `
+                var todoElement = ``
+                if (todo.complete === true) {
+                    var todoElement = `
                     <div class="todo-item" onclick="detailView(${todo.id})">
                         <p><strong>Name:</strong>${todo.name}</p>
                         <p><strong>Description:</strong> ${ todo.description }</p>
-                        <p><strong>Complete:</strong> ${ todo.complete }</p>
-                        <p><strong>Completed At:</strong> ${ todo.complete_at }</p>
+                        <p><strong>Complete:</strong> ${ todo.complete ? "완료" : "진행중" }</p>
+                        <p><strong>Completed At:</strong> ${ datetimeToString(todo.completed_at) }</p>
                         <p><strong>Experience Points:</strong> ${ todo.exp }</p>
                     </div>
                     `
+                }
+                else {
+                    var todoElement = `
+                    <div class="todo-item" onclick="detailView(${todo.id})">
+                        <p><strong>Name:</strong>${todo.name}</p>
+                        <p><strong>Description:</strong> ${ todo.description }</p>
+                        <p><strong>Complete:</strong> ${ todo.complete ? "완료" : "진행중" }</p>
+                        <p><strong>Completed At:</strong> ${ datetimeToString(todo.completed_at) }</p>
+                        <p><strong>Experience Points:</strong> ${ todo.exp }</p>
+                        <button class="todoUpdate">완료</button>
+                    </div>
+                    `
+                }
+                
                 $(".todocontainer").append(todoElement)
             }
         })
@@ -33,6 +49,15 @@
     })
     function detailView(id){
         window.location.href = `/todo/${id}/`;
+    }
+    function toComplete(pk){
+        axiosInstance.patch(`/api/todo/viewsets/${pk}`,
+        {
+            complete: true,
+        })
+        .then(function(response){
+            window.locatoin.reload()
+        })
     }
 </script>
 
