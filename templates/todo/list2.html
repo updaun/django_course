@@ -2,21 +2,32 @@
 
 {% block content %}
 
-<div class="todocontainer">
-        <h1>Todo List</h1>
-        <button class="todoCreate" onclick="window.location.href='/todo/create/'">Todo 등록하기</button>
+<div class="container">
+    <h1>Todo List</h1>
+    <button class="todoCreate" onclick="window.location.href='/todo/create/'">Todo 등록하기</button>
+    <div class="todocontainer">
+    </div>
+</div>
+
+
+<div class="pagination">
 
 </div>
 
 <script>
     $(document).ready(function(){
-        axiosInstance.get("/api/todo/list/")
+        loadTodoList(1);
+    });
+
+    function loadTodoList(page){
+        $(".todocontainer").empty();
+        axiosInstance.get(`/api/todo/viewsets/?page=${page}`)
         .then(function(response){
-            for (var i = 0; i < response.data.length; i++){
-                var todo = response.data[i]
+            for (var i = 0; i < response.data.data.length; i++){
+                var todo = response.data.data[i]
                 var todoElement = ``
-                if (todo.complete === true) {
-                    var todoElement = `
+                if (todo.complete === true){
+                    todoElement = `
                     <div class="todo-item" onclick="detailView(${todo.id})">
                         <p><strong>Name:</strong>${todo.name}</p>
                         <p><strong>Description:</strong> ${ todo.description }</p>
@@ -25,40 +36,65 @@
                         <p><strong>Experience Points:</strong> ${ todo.exp }</p>
                     </div>
                     `
-                }
-                else {
-                    var todoElement = `
+                } else {
+                    todoElement = `
                     <div class="todo-item" onclick="detailView(${todo.id})">
                         <p><strong>Name:</strong>${todo.name}</p>
                         <p><strong>Description:</strong> ${ todo.description }</p>
                         <p><strong>Complete:</strong> ${ todo.complete ? "완료" : "진행중" }</p>
                         <p><strong>Completed At:</strong> ${ datetimeToString(todo.completed_at) }</p>
                         <p><strong>Experience Points:</strong> ${ todo.exp }</p>
-                        <button class="todoUpdate">완료</button>
+                        <button class="todoUpdate" onclick="toComplete(${todo.id})">완료</button>
                     </div>
                     `
                 }
-                
+                 
                 $(".todocontainer").append(todoElement)
             }
+            // 페이징 링크 생성
+            var pagination = response.data;
+            var pageLinks = "";
+
+            if (pagination.page_count > 1) {
+                var currentPage = pagination.current_page;
+                var totalPages = pagination.page_count;
+                var maxDisplayedPages = 10;
+
+                var startPage = Math.max(1, currentPage - 5);
+                var endPage = Math.min(totalPages, currentPage + 5);
+                
+                if (currentPage - startPage < 5) {
+                    endPage = Math.min(endPage + (5 - (currentPage - startPage)), totalPages);
+                }
+                if (endPage - currentPage < 5) {
+                    startPage = Math.max(startPage - (5 - (endPage - currentPage)), 1);
+                }
+
+                for (var i = startPage; i <= endPage; i++) {
+                    pageLinks += `<a href="#" onclick="loadTodoList(${i})">${i}</a> `;
+                }
+                $(".pagination").html(pageLinks);
+            }
+                
         })
         .catch(function(error){
             console.log(error)
         })
 
-    })
+    }
     function detailView(id){
         window.location.href = `/todo/${id}/`;
     }
     function toComplete(pk){
-        axiosInstance.patch(`/api/todo/viewsets/${pk}`,
+        axiosInstance.patch(`/api/todo/viewsets/${pk}/`,
         {
             complete: true,
         })
         .then(function(response){
-            window.locatoin.reload()
+            window.location.reload()
         })
     }
+    
 </script>
 
 {% endblock %}

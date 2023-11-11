@@ -13,6 +13,7 @@ label {
     font-weight: bold;
 }
 
+.container
 .todocontainer {
     max-width: 800px;
     margin: 0 auto;
@@ -85,16 +86,33 @@ h1 {
     background-color: coral;
 }
 
-.header{
+.header {
     background-color: #007bff;
+    /* 배경색 */
     color: #fff;
+    /* 글자색 */
     padding: 20px;
-    text-align: center;
+    /* 내부 여백 */
+    display: flex;
+    justify-content: space-between;
+    /* 로그인 버튼과 로그아웃 버튼을 우측에 정렬 */
 }
 
-.header h1{
+.header h1 {
     margin: 0;
+    /* 헤더 제목 위 아래 여백 제거 */
     font-size: 24px;
+    /* 글자 크기 */
+}
+
+.header .user-actions {
+    display: flex;
+}
+
+.header .user-actions a {
+    color: #fff;
+    margin-left: 10px;
+    /* 로그인 버튼과 로그아웃 버튼 사이 여백 */
 }
 
 .footer {
@@ -108,11 +126,37 @@ h1 {
     /* 텍스트 가운데 정렬 */
 }
 
-.footer a{
+.footer a {
     color: #fff;
+    /* 링크 글자색 */
     text-decoration: none;
+    /* 밑줄 제거 */
 }
 
 .footer a:hover {
-    text-decoration:: underline;
+    text-decoration: underline;
+    /* 호버 시 밑줄 표시 */
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.pagination a {
+    color: #007bff;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.pagination .disabled {
+    color: #888;
+    pointer-events: none;
 }
