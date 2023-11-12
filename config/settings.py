@@ -36,6 +36,8 @@ ALLOWED_HOSTS = []
 
 CUSTOM_APPS = [
     'todo',
+    'brand',
+    'product',
 ]
 
 THIRD_PARTY_APPS = [
