@@ -153,9 +153,8 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-
-REST_FRAMEWORK = {
-    
-    
-    
+# 기본 인증 및 페이지네이션 default설정 없음
+REST_FRAMEWORK = {    
+    "DEFAULT_PAGINATION_CLASS" : "api.pagination.CustomPageNumberPagination",
+    "PAGE_SIZE":10,
 }

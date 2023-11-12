@@ -4,21 +4,17 @@ django template
 {{ todos }}
 
 {% for todo in todos %}
-    {{ todo }}
+    {{ todo }} {% comment %}  __str__ -> name {% endcomment %}
     <br>
-    {{todo.name}}
+    {{ todo.name }}
     <br>
     {% if todo.description %}
-        {{todo.description}}
+        {{ todo.description }}
     {% else %}
-        No description    
+        No description
     {% endif %}
     <br>
-    {{todo.completed}}
+    {{ todo.complete }}
     <br>
-    {{todo.created_at}}
+    {{ todo.created_at }}
 {% endfor %}
-
-
-
-{{first}}
