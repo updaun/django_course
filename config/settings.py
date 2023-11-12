@@ -149,3 +149,6 @@ REST_FRAMEWORK = {
 }
 
 MY_NAME = "김민규"
+
+LOGIN_REDIRECT_URL = "/todo/list/"
+LOGOUT_REDIRECT_URL = "/api-auth/login/"

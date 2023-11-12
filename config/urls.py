@@ -31,4 +31,5 @@ urlpatterns = [
     path("todo/", include("todo.urls")),
     path("random/template/", views.RandomNumberTemplateView.as_view()), #클래스일 때는 이걸 해줘야함!!!
     path("random/view/", views.RandomNumberView.as_view()),
+    path('api-auth/', include('rest_framework.urls')),
 ]
