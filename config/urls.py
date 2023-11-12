@@ -26,6 +26,8 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", views.hello_World),
+    path("api/product/", include("product.api_urls")),
+    path("api/brand/", include("brand.api_urls")),
     # path("json/", views.hello_world_json),
     path("api/todo/", include("todo.api_urls")),
     path("todo/", include("todo.urls")),
