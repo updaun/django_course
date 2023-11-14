@@ -37,6 +37,8 @@ CUSTOM_APPS = [
     'todo',
     'brand',
     'product',
+    'category',
+    'blog',
 ]
 
 THIRD_PARTY_APPS = [
