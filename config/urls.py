@@ -20,14 +20,14 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", views.hello_world), # 127.0.0.1:8000/
+    path("api/blog/", include("blog.api_urls")),
+    path("", views.hello_world),
     path("api/product/", include("product.api_urls")),
     path("api/brand/", include("brand.api_urls")),
+    # path("json/", views.hello_world_json),
     path("api/todo/", include("todo.api_urls")),
-    path("todo/", include("todo.urls")), # 127.0.0.1:8000/todo/
-    path("random/template/", views.RandomNumberTemplateView.as_view()),
+    path("todo/", include("todo.urls")),
+    path("random/template/", views.RandomNumberTemplateView.as_view()), #클래스일 때는 이걸 해줘야함!!!
     path("random/view/", views.RandomNumberView.as_view()),
-    # 127.0.0.1:8000/api-auth/login/
-    # 127.0.0.1:8000/api-auth/logout/ -> session flush cookie
     path('api-auth/', include('rest_framework.urls')),
 ]
