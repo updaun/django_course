@@ -17,10 +17,12 @@ from django.contrib import admin
 from django.urls import path, include
 from . import views
 
+# http://127.0.0.1:8000/
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", views.hello_world), # 127.0.0.1:8000/
+    path("api/blog/", include("blog.api_urls")),
     path("api/product/", include("product.api_urls")),
     path("api/brand/", include("brand.api_urls")),
     path("api/todo/", include("todo.api_urls")),
