@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="brand-grid-container" id="brandGrid"></div>
+
+<div class="grid-container" id="productGrid"></div>
+
+<script>
+
+$(document).ready(function() {
+
+    // 브랜드 그리드 생성
+    axiosInstance.get("/api/brand/")
+    .then(data => data.data)
+        .then(data => {
+            const brandGrid = document.getElementById('brandGrid');
+
+            // 전체
+            const brandCard = document.createElement('div');
+            brandCard.classList.add('brand-card');
+            brandCard.textContent = '전체';
+            brandGrid.appendChild(brandCard);
+
+            data.data.forEach(brand => {
+                console.log(brand);
+                const brandCard = document.createElement('div');
+                brandCard.classList.add('brand-card');
+
+                // 브랜드 이미지 (이미지가 없는 경우 기본 이미지 또는 원하는 처리)
+                const brandImage = document.createElement('img');
+                brandImage.src = brand.logo || 'placeholder_image.jpg'; // 이미지가 없을 경우 placeholder 이미지 설정
+                brandImage.alt = brand.name;
+                brandImage.classList.add('brand-image');
+                brandCard.appendChild(brandImage);
+
+                // 브랜드 이름
+                const brandName = document.createElement('button');
+                brandName.textContent = brand.name;
+                brandName.addEventListener('click', function() {
+                    if (brand.website){
+                        window.open(brand.website);
+                    }
+                });
+                brandName.classList.add('brand-name');
+                
+                brandCard.appendChild(brandName);
+
+                brandCard.addEventListener('click', function() {
+                    
+                });
+
+                brandGrid.appendChild(brandCard);
+
+            });
+
+        })
+
+    axiosInstance.get("/api/product/")
+    .then(data => data.data)
+        .then(data => {
+            console.log(data);
+            // 상품 그리드 생성
+            const productGrid = document.getElementById('productGrid');
+            
+            data.data.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.classList.add('product-card');
+
+                // 상품 이미지 (이미지가 없는 경우 기본 이미지 또는 원하는 처리)
+                const productImage = document.createElement('img');
+                productImage.src = product.image || 'placeholder_image.jpg'; // 이미지가 없을 경우 placeholder 이미지 설정
+                productImage.alt = product.name;
+                productImage.classList.add('product-image');
+                productCard.appendChild(productImage);
+
+                // 상품 이름
+                const productName = document.createElement('p');
+                productName.textContent = product.name;
+                productCard.appendChild(productName);
+
+                // 상품 가격 (가격이 없는 경우 기본 가격 또는 원하는 처리)
+                const productPrice = document.createElement('p');
+                productPrice.textContent = product.price ? `${product.price.toLocaleString()}` : '가격 정보 없음';
+                productCard.appendChild(productPrice);
+
+                // 상품 링크 (링크가 없는 경우 기본 처리 또는 원하는 처리)
+                if (product.link) {
+                    const productLink = document.createElement('a');
+                    productLink.href = product.link;
+                    productLink.textContent = 'View Details';
+                    productCard.appendChild(productLink);
+                }
+
+                productGrid.appendChild(productCard);
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+});
+
+
+</script>
+
+
+{% endblock %}

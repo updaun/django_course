@@ -160,3 +160,31 @@ h1 {
     color: #888;
     pointer-events: none;
 }
+
+.brand-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.brand-card,
+.product-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.brand-image,
+.product-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
