@@ -3,7 +3,6 @@ from blog.models import Blog
 from category.models import Category
 from category.serializers import CategorySerializer
 
-
 class BlogSerializer(serializers.ModelSerializer):
     category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all(), many=True, required=False)
     class Meta:
