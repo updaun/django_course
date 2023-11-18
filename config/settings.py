@@ -39,6 +39,7 @@ CUSTOM_APPS = [
     'product',
     'category',
     'blog',
+    'users',
 ]
 
 THIRD_PARTY_APPS = [
@@ -159,3 +160,5 @@ MY_NAME = "김민규"
 LOGIN_URL = "/api-auth/login/"
 LOGIN_REDIRECT_URL = "/todo/list/"
 LOGOUT_REDIRECT_URL = "/api-auth/login/"
+
+AUTH_USER_MODEL = "users.User"
