@@ -40,6 +40,7 @@ CUSTOM_APPS = [
     'product',
     'category',
     'blog',
+    'users',
 ]
 
 THIRD_PARTY_APPS = [
@@ -158,3 +159,6 @@ REST_FRAMEWORK = {
 LOGIN_URL = "/api-auth/login/"
 LOGIN_REDIRECT_URL = "/todo/list/"
 LOGOUT_REDIRECT_URL = "/api-auth/login/"
+
+AUTH_USER_MODEL = "users.User"
+

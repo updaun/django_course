@@ -1,10 +1,10 @@
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import User
+
 
 
 class Todo(models.Model):
-    user = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True, blank=True, related_name="todos")
+    user = models.ForeignKey('users.User', on_delete=models.SET_NULL, null=True, blank=True, related_name="todos")
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     complete = models.BooleanField(default=False)
