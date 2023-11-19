@@ -28,6 +28,7 @@ urlpatterns = [
     path("api/brand/", include("brand.api_urls")),
     path("api/todo/", include("todo.api_urls")),
     path("todo/", include("todo.urls")), # 127.0.0.1:8000/todo/
+    path("auth/", include("users.urls")), # 127.0.0.1:8000/todo/
     path("random/template/", views.RandomNumberTemplateView.as_view()),
     path("random/view/", views.RandomNumberView.as_view()),
     # 127.0.0.1:8000/api-auth/login/
