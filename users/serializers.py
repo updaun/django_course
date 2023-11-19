@@ -21,3 +21,8 @@ class SignupSerializer(serializers.Serializer):
         if password != password2:
             raise serializers.ValidationError("두 비밀번호가 일치하지 않습니다.")
         return data
+    
+
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()

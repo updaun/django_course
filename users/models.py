@@ -106,3 +106,10 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
     
+
+class Jwt(models.Model):
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    access = models.TextField()
+    refresh = models.TextField()
+    
