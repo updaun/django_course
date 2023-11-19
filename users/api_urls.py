@@ -1,0 +1,7 @@
+from django.urls import path
+from .apis import *
+
+# /api/auth/
+urlpatterns = [
+    path("signup/", SignupAPI.as_view()),
+]
