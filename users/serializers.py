@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from users.models import User
-from django.contrib.auth import authenticate
+
 
 class SignupSerializer(serializers.Serializer):
     username = serializers.CharField()
@@ -26,7 +26,3 @@ class SignupSerializer(serializers.Serializer):
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField()
-
-    def validate(self, data):
-        username = data.get("username")
-        password = data.get("password")
