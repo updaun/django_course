@@ -158,8 +158,8 @@ REST_FRAMEWORK = {
 
 MY_NAME = "김민규"
 
-LOGIN_URL = "/api-auth/login/"
+LOGIN_URL = "/auth/login/"
 LOGIN_REDIRECT_URL = "/todo/list/"
-LOGOUT_REDIRECT_URL = "/api-auth/login/"
+LOGOUT_REDIRECT_URL = "/auth/login/"
 
 AUTH_USER_MODEL = "users.User"

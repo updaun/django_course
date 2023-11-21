@@ -70,7 +70,7 @@ class LogoutAPI(APIView):
         from users.utils import decodeJWT
         user = decodeJWT(request.META.get("HTTP_AUTHORIZATION"))
         if user != "expired" and user != "decode_error" and user is not None:
-            Kwt.objects.filter(user=user).delete()
+            Jwt.objects.filter(user=user).delete()
         
         # session logout
         logout(request)

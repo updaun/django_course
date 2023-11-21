@@ -112,7 +112,14 @@ h1 {
 .header .user-actions a {
     color: #fff;
     margin-left: 10px;
+    text-decoration: none;
     /* 로그인 버튼과 로그아웃 버튼 사이 여백 */
+}
+
+.header .user-actions a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+    /* 호버 시 밑줄 표시 */
 }
 
 .footer {
@@ -124,6 +131,46 @@ h1 {
     /* 내부 여백 */
     text-align: center;
     /* 텍스트 가운데 정렬 */
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+#loginForm {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
 }
 
 .footer a {

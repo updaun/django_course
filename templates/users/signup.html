@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Signup</h2>
+
+  <form id="loginForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+
+    <br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+
+    <br>
+
+    <label for="password">Confirm Password:</label>
+    <input type="password" id="password2" name="password2" required>
+
+    <br>
+
+    <button type="button" onclick="submitForm()">Signup</button>
+  </form>
+
+
+<script>
+
+function submitForm() {
+  var username = document.getElementById('username').value;
+  var password = document.getElementById('password').value;
+  var password2 = document.getElementById('password2').value;
+
+  var data = {
+    username: username,
+    password: password,
+    password2: password2,
+  };
+
+  axiosInstance.post('/api/auth/signup/', data)
+    .then(function (response) {
+
+      window.location.href = '/auth/login/';
+      // 여기에서 로그인 성공 시의 추가 작업을 수행할 수 있습니다.
+    })
+    .catch(function (error) {
+      // 서버 응답 실패 시 처리
+      console.error('Login failed:', error);
+        alert('Signup failed. Please try again.');
+      // 여기에서 로그인 실패 시의 추가 작업을 수행할 수 있습니다.
+    });
+}
+
+</script>
+
+{% endblock%}
