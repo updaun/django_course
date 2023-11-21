@@ -152,15 +152,13 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES":[
         # "rest_framework.authentication.SessionAuthentication",
         "api.session_authentication.NoCsrfSessionAuthentication",
-             
     ],
     "DEFAULT_PAGINATION_CLASS":"api.pagination.CustomPageNumberPagination",
     "PAGE_SIZE":10,
 }
 
-LOGIN_URL = "/api-auth/login/"
+LOGIN_URL = "/auth/login/"
 LOGIN_REDIRECT_URL = "/todo/list/"
-LOGOUT_REDIRECT_URL = "/api-auth/login/"
+LOGOUT_REDIRECT_URL = "/auth/login/"
 
 AUTH_USER_MODEL = "users.User"
-
