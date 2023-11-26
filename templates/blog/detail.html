@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="blog-detail-container">
+
+    <h1 id="blogTitle"></h1>
+    <div id="blogCategories"></div>
+    <img id="blogImage" src="" alt="Blog Image" style="display: none;">
+    
+    <div id="blogContent"></div>
+    
+    {% if blog.user == user %}
+    <div class="blog-actions">
+        <button id="editButton" type="button" onclick="goUpdate()">수정</button>
+        <button id="deleteButton" type="button" onclick="goDelete()">삭제</button>
+    </div>
+    {% endif %}
+
+</div>
+
+<script>
+
+$(document).ready(function(){
+    pk = window.location.href.split('/').filter(Boolean).pop()
+    axiosInstance.get(`/api/blog/${pk}/`)
+    .then(function(response) {
+        var blogData = response.data;
+        console.log(blogData);
+        document.getElementById('blogTitle').textContent = blogData.title;
+        if(blogData.image){
+            var blogImage = document.getElementById('blogImage');
+            blogImage.src = blogData.image;
+            blogImage.style.display = 'block';
+        }
+        document.getElementById('blogContent').innerHTML = blogData.content;
+        var categories = blogData.category.map(function(cat) { return cat.name; }).join(', ');
+        document.getElementById('blogCategories').textContent = '카테고리 목록: ' + categories;
+        // 기타 세부 정보를 여기에 추가
+    });
+});
+
+function goUpdate() {
+    pk = window.location.href.split('/').filter(Boolean).pop()
+    window.location.href = `/blog/update/${pk}/`;
+}
+
+function goDelete() {
+    if (!confirm('게시글을 삭제하시겠습니까?')) return;
+    pk = window.location.href.split('/').filter(Boolean).pop()
+    axiosInstance.delete(`/api/blog/${pk}/`)
+    .then(function(response) {
+        window.location.href = '/';
+    });
+}
+
+</script>
+
+{% endblock %}

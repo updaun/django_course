@@ -17,3 +17,8 @@ class RandomNumberView(View):
     def get(self, request):
         random_number = random.randint(1, 100)
         return render(request, "random.html", {"random": random_number})
+    
+
+class HomeView(View):
+    def get(self, request):
+        return render(request, "home.html")

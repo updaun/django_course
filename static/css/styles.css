@@ -1,6 +1,7 @@
 /* 간단한 스타일링을 위한 CSS 예제 */
 body {
     font-family: Arial, sans-serif;
+    font-size: 20px;
 }
 
 .container {
@@ -13,8 +14,7 @@ label {
     font-weight: bold;
 }
 
-.container
-.todocontainer {
+.container .todocontainer {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
@@ -91,7 +91,7 @@ h1 {
     /* 배경색 */
     color: #fff;
     /* 글자색 */
-    padding: 20px;
+    padding: 20px 40px;
     /* 내부 여백 */
     display: flex;
     justify-content: space-between;
@@ -107,18 +107,18 @@ h1 {
 
 .header .user-actions {
     display: flex;
+    align-items: center;
 }
 
 .header .user-actions a {
     color: #fff;
-    margin-left: 10px;
+    margin-left: 20px;
     text-decoration: none;
     /* 로그인 버튼과 로그아웃 버튼 사이 여백 */
 }
 
-.header .user-actions a:hover {
+.user-actions a:hover {
     text-decoration: underline;
-    cursor: pointer;
     /* 호버 시 밑줄 표시 */
 }
 
@@ -168,42 +168,246 @@ h1 {
     pointer-events: none;
 }
 
-h2 {
-    text-align: center;
-    color: #333;
-}
-
-#loginForm {
-    background-color: #fff;
+.category-grid-container,
+.brand-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(125px, 1fr));
+    gap: 20px;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-label {
-    display: block;
-    margin-bottom: 8px;
-    color: #333;
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
 }
 
-input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 16px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.category-card,
+.brand-card,
+.product-card,
+.blog-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
 }
 
-button {
-    background-color: #4caf50;
-    color: white;
-    padding: 10px 15px;
+.brand-card p {
+    margin: 80px 0;
+}
+
+.brand-card button {
+    margin: 0;
+    padding: 10px;
+    background-color: lightsteelblue;
+    border-radius: 5px;
+    color: #111;
     border: none;
-    border-radius: 4px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.category-card:hover,
+.brand-card:hover,
+.product-card:hover,
+.blog-card:hover {
+    border-color: #007bff;
+}
+
+.category-card.active,
+.brand-card.active,
+.product-card.active .blog-card.active {
+    border-color: #0056b3;
+}
+
+.brand-image,
+.product-image,
+.blog-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.logo a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.pagination-container {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.pagination-button {
+    margin: 0 5px;
+    padding: 15px 20px;
     cursor: pointer;
 }
 
-button:hover {
-    background-color: #45a049;
+.pagination-button.active {
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+}
+
+.pagination-button {
+    text-decoration: none;
+}
+
+.blog-form-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.blog-form-container h1 {
+    text-align: center;
+}
+
+.form-field {
+    margin-bottom: 15px;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-field input[type="text"],
+.form-field textarea,
+.form-field select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-check {
+    margin-bottom: 15px;
+}
+
+.form-check input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+button[type="submit"] {
+    background-color: #0056b3;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button[type="submit"]:hover {
+    background-color: #004494;
+}
+
+.blog-form-container label.category-checkbox {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.blog-form-container label.category-checkbox input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.blog-detail-container {
+    max-width: 800px;
+    /* 컨테이너의 최대 너비 */
+    margin: 0 auto;
+    /* 중앙 정렬 */
+    padding: 20px;
+    /* 패딩 */
+    background-color: #f8f8f8;
+    /* 배경색 */
+    border-radius: 8px;
+    /* 모서리 둥글게 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* 그림자 효과 */
+}
+
+.blog-detail-container h1 {
+    font-size: 28px;
+    /* 제목의 폰트 크기 */
+    color: #333;
+    /* 제목의 색상 */
+    margin-bottom: 15px;
+    /* 제목 아래의 여백 */
+}
+
+.blog-detail-container img {
+    max-width: 100%;
+    /* 이미지의 최대 너비 */
+    height: auto;
+    /* 이미지 높이는 자동 조절 */
+    border-radius: 4px;
+    /* 이미지 모서리 둥글게 */
+    margin-bottom: 15px;
+    /* 이미지 아래의 여백 */
+}
+
+.blog-detail-container #blogContent {
+    font-size: 16px;
+    /* 내용의 폰트 크기 */
+    color: #555;
+    /* 내용의 색상 */
+    line-height: 1.6;
+    /* 줄 간격 */
+    margin-bottom: 15px;
+    /* 내용 아래의 여백 */
+}
+
+.blog-detail-container #blogCategories {
+    font-size: 14px;
+    /* 카테고리의 폰트 크기 */
+    color: #666;
+    /* 카테고리의 색상 */
+    margin-bottom: 20px;
+    /* 카테고리 아래의 여백 */
+}
+
+#blogImage {
+    display: block;
+    /* 이미지를 블록 레벨 요소로 만듭니다 */
+    max-width: 100%;
+    /* 이미지의 최대 너비를 100%로 설정 */
+    height: auto;
+    /* 이미지의 높이를 자동으로 조절 */
+    margin: 0 auto;
+    /* 위아래 마진은 0, 좌우 마진은 자동으로 설정하여 가운데 정렬 */
+    border-radius: 4px;
+    /* 이미지 모서리 둥글게 */
+}
+
+.blog-actions {
+    margin-top: 20px;
+    text-align: center;
+    /* 버튼을 중앙 정렬합니다 */
+}
+
+.blog-actions button {
+    padding: 10px 15px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.blog-actions button:hover {
+    background-color: #0056b3;
+}
+
+#deleteButton {
+    background-color: #dc3545;
+    /* 삭제 버튼은 빨간색으로 표시 */
+}
+
+#deleteButton:hover {
+    background-color: #c82333;
 }

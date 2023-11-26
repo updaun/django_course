@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="blog-form-container">
+    <h1>Write Your Blog</h1>
+    <form id="blogForm">
+        <div class="form-field">
+            <label for="title">Title</label>
+            <input type="text" id="title" maxlength="150" required>
+        </div>
+        <div class="form-field">
+            <label for="content">Content</label>
+            <textarea id="content" rows="5"></textarea>
+        </div>
+        <div class="form-field">
+            <label for="image">Image</label>
+            
+
+            <input type="file" id="image" accept="image/*">
+
+        </div>
+        <div class="form-field" id="categoryList">
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<script>
+
+axiosInstance.get("/api/category/?page_size=all")
+.then(function (response) {
+    var categories = response.data.data;
+    var categoryList = document.getElementById("categoryList");
+    categories.forEach(function(category) {
+        var label = document.createElement("label");
+        label.classList.add("category-checkbox");
+
+        var checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.value = category.id;
+        checkbox.name = "category";
+        
+        label.appendChild(checkbox);
+        label.appendChild(document.createTextNode(category.name));
+        categoryList.appendChild(label);
+    });
+});
+
+
+
+document.getElementById('blogForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    var title = document.getElementById('title').value;
+    var content = document.getElementById('content').value;
+
+    var selectedCategories = [];
+    var categoryCheckboxes = document.querySelectorAll('#categoryList input[type="checkbox"]:checked');
+    categoryCheckboxes.forEach(function(checkbox) {
+        selectedCategories.push(checkbox.value);
+    });
+
+    axiosInstance.post('/api/blog/', {
+        title: title,
+        content: content,
+        category: selectedCategories
+    })
+    .then(response => {
+        console.log(response);
+        alert("성공적으로 게시글이 생성되었습니다.")
+        window.location.href = "/";
+    }).catch(error => {
+        console.error('Error creating post:', error);
+        // 오류 처리 로직
+    });
+});
+</script>
+
+{% endblock %}
