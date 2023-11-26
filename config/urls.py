@@ -26,6 +26,7 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/auth/", include("users.api_urls")),
+    path("api/category/", include("category.api_ruls")),
     path("auth/", include("users.urls")),
     path("api/blog/", include("blog.api_urls")),
     path("", views.hello_World),

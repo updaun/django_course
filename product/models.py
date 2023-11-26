@@ -1,4 +1,5 @@
 from django.db import models
+import random
 
 # Create your models here.
 class Product(models.Model):
@@ -12,3 +13,15 @@ class Product(models.Model):
     
     class Meta:
         unique_together = ['name', 'brand']
+    
+    
+    def save(self, *args, **kwargs):
+        
+        if not self.id and not self.image:
+            random_number = random.randint(1, 10000)
+            self.image = "https://picsum.photos/500?random={random_number}"
+        
+        super().save(*args, **kwargs)
+    
+    def __str__(self):
+        return f"{self.name} ({self.id})"

@@ -7,3 +7,5 @@ class Brand(models.Model):
     website = models.CharField(max_length=150, null=True, blank=True)
     hidden = models.BooleanField(default=False)
     
+    def __str__(self) -> str:
+        return f"{self.name} {{self.id}}"
