@@ -6,3 +6,6 @@ class Brand(models.Model):
     logo = models.CharField(max_length=150, null=True, blank=True)
     website = models.CharField(max_length=150, null=True, blank=True)
     hidden = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.name} ({self.id})" 
