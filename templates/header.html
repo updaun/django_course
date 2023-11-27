@@ -1,21 +1,18 @@
 <div class="header">
-    <h1>Django Course</h1>
+    <div class="logo">
+        <a href = "/">
+            <h1>DjangoCourse</h1>
+        </a>
+    </div>
     <div class="user-actions">
     {% if user.is_authenticated %}
-        <a onclick="logout()">로그아웃</a>
+        <a href="/blog/create/">NewBlog</a>
+        <a href="/blog/my/">MyBlog</a>
+        <a href="/todo/list/">MyTodo</a>
+        <a href="/api-auth/logout/">LogOut</a>
     {% else %}
-        <a href="/auth/login/">로그인</a>
+        <a href="/api-auth/login/">Login</a>
     {% endif %}
     </div>
-</div>
-
-<script>
-
-    function logout() {
-        axiosInstance.get("/api/auth/logout/")
-        .then(function(response){
-            window.location.href = "/auth/login/"
-        })
-    }
     
-    </script>
+</div>

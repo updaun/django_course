@@ -1,8 +1,7 @@
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import User
 
-# Create your models here.
+
 class Todo(models.Model):
     user = models.ForeignKey('users.User', on_delete=models.SET_NULL, null=True, blank=True, related_name="todos")
     name = models.CharField(max_length=100)
@@ -15,11 +14,10 @@ class Todo(models.Model):
 
     def __str__(self):
         return self.name
-
+    
     def save(self, *args, **kwargs):
         if self.complete and self.completed_at is None:
             self.completed_at = timezone.now()
         if not self.complete and self.completed_at is not None:
             self.completed_at = None
         super().save(*args, **kwargs)
-

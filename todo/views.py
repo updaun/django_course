@@ -1,8 +1,9 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from .models import Todo
 from django.views import View
+from .models import Todo
+from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from rest_framework.permissions import IsAuthenticated
 
 
 def todo_list(request):
@@ -56,6 +57,6 @@ class TodoDetailView(View):
     
 
 class TodoUpdateView(View):
-
+    permission_classes = (IsAuthenticated,)
     def get(self, request, pk):
         return render(request, "todo/update.html")
