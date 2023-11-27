@@ -1,0 +1,301 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="brand-grid-container" id="brandGrid"></div>
+
+<div class="grid-container" id="productGrid"></div>
+<div class="pagination-container" id="productPagination"></div>
+
+
+<div class="category-grid-container" id="categoryGrid"></div>
+
+<div class="grid-container" id="blogGrid"></div>
+<div class="pagination-container" id="blogPagination"></div>
+
+
+<script>
+
+$(document).ready(function() {
+    // 브랜드 리스트 생성
+    createBrandList();
+    // 브랜드 - 상품
+    brandProduct();
+    // 카테고리 리스트 생성
+    createCategoryList();
+    // 카테고리 - 블로그
+    categoryBlog();
+});
+
+// 브랜드 리스트 생성
+function createBrandList() {
+    axiosInstance.get("/api/brand/")
+    .then(data => data.data)
+        .then(data => {
+            const brandGrid = document.getElementById('brandGrid');
+
+            // 전체
+            const brandCard = document.createElement('div');
+            brandCard.classList.add('brand-card');
+            brandCard.addEventListener('click', function() {
+                brandProduct();
+            });
+            const brandName = document.createElement('p');
+            brandName.textContent = '전체';
+            brandCard.appendChild(brandName);
+            brandGrid.appendChild(brandCard);
+
+            data.data.forEach(brand => {
+                const brandCard = document.createElement('div');
+                brandCard.classList.add('brand-card');
+                
+                // 이벤트 추가
+                brandCard.addEventListener('click', function() {
+                    brandProduct(brand.id);
+                    // 엑티브
+                    const brandCards = document.getElementsByClassName('brand-card');
+                    for (var i = 0; i < brandCards.length; i++) {
+                        brandCards[i].classList.remove('active');
+                    }
+                    brandCard.classList.add('active');
+                });
+
+                // 브랜드 이미지 (이미지가 없는 경우 기본 이미지 또는 원하는 처리)
+                const brandImage = document.createElement('img');
+                brandImage.src = brand.logo || 'placeholder_image.jpg'; // 이미지가 없을 경우 placeholder 이미지 설정
+                brandImage.alt = brand.name;
+                brandImage.classList.add('brand-image');
+                brandCard.appendChild(brandImage);
+
+                // 브랜드 이름
+                const brandName = document.createElement('button');
+                brandName.textContent = brand.name;
+                brandName.addEventListener('click', function() {
+                    if (brand.website){
+                        window.open(brand.website);
+                    }
+                });
+                brandName.classList.add('brand-name');
+                
+                brandCard.appendChild(brandName);
+
+                brandCard.addEventListener('click', function() {
+                    
+                });
+
+                brandGrid.appendChild(brandCard);
+
+            });
+
+        })
+}
+
+// 브랜드 - 상품
+function brandProduct(brandId=null, page=1) {
+    let url = `/api/product/?page_size=8&page=${page}`;
+    if (brandId !== null){
+        url = `/api/product/?brand=${brandId}&page_size=8&page=${page}`;
+    }
+    axiosInstance.get(url)
+    .then(data => data.data)
+        .then(data => {
+            // 상품 그리드 생성
+            const productGrid = document.getElementById('productGrid');
+            // 비우기
+            productGrid.innerHTML = '';
+
+            // 없을 경우
+            if (data.data.length === 0){
+                const productCard = document.createElement('div');
+                productCard.classList.add('product-card');
+                const productName = document.createElement('p');
+                productName.textContent = '상품 정보 없음';
+                productCard.appendChild(productName);
+                productGrid.appendChild(productCard);
+            }
+            
+            data.data.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.classList.add('product-card');
+
+                // 이벤트 추가
+                productCard.addEventListener('click', function() {
+                    if (product.link) {
+                        window.open(product.link);
+                    }
+                });
+
+                // 상품 이미지 (이미지가 없는 경우 기본 이미지 또는 원하는 처리)
+                const productImage = document.createElement('img');
+                productImage.src = product.image || 'placeholder_image.jpg'; // 이미지가 없을 경우 placeholder 이미지 설정
+                productImage.alt = product.name;
+                productImage.classList.add('product-image');
+                productCard.appendChild(productImage);
+
+                // 상품 이름
+                const productName = document.createElement('p');
+                productName.textContent = product.name;
+                productCard.appendChild(productName);
+
+                // 상품 가격 (가격이 없는 경우 기본 가격 또는 원하는 처리)
+                const productPrice = document.createElement('p');
+                productPrice.textContent = product.price ? `${product.price.toLocaleString()}` : '가격 정보 없음';
+                productCard.appendChild(productPrice);
+
+                // 상품 링크 (링크가 없는 경우 기본 처리 또는 원하는 처리)
+                if (product.link) {
+                    const productLink = document.createElement('a');
+                    productLink.href = product.link;
+                    productLink.textContent = 'View Details';
+                    productCard.appendChild(productLink);
+                }
+
+                productGrid.appendChild(productCard);
+            });
+            createPagination('productPagination', data.current_page, data.page_count, (pageNum) => brandProduct(brandId, pageNum));
+        })
+        .catch(error => console.error('Error fetching data:', error));
+}
+
+// 카테고리 리스트 생성
+function createCategoryList() {
+    axiosInstance.get("/api/category/")
+    .then(data => data.data)
+        .then(data => {
+            // 카테고리 그리드 생성
+            const categoryGrid = document.getElementById('categoryGrid');
+
+
+            // 전체
+            const categoryCard = document.createElement('div');
+            categoryCard.classList.add('category-card');
+            categoryCard.addEventListener('click', function() {
+                categoryBlog();
+            });
+            const categoryName = document.createElement('p');
+            categoryName.textContent = '전체';
+            categoryCard.appendChild(categoryName);
+            categoryGrid.appendChild(categoryCard);
+            
+            data.data.forEach(category => {
+                const categoryCard = document.createElement('div');
+                categoryCard.classList.add('category-card');
+
+                // 이벤트 추가
+                categoryCard.addEventListener('click', function() {
+                    categoryBlog(category.id);
+                    // 엑티브
+                    const categoryCards = document.getElementsByClassName('category-card');
+                    for (var i = 0; i < categoryCards.length; i++) {
+                        categoryCards[i].classList.remove('active');
+                    }
+                    categoryCard.classList.add('active');
+                });
+
+                // 카테고리 이름
+                const categoryName = document.createElement('p');
+                categoryName.textContent = category.name;
+                categoryCard.appendChild(categoryName);
+
+                
+
+                categoryGrid.appendChild(categoryCard);
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+}
+
+
+// 카테고리 - 블로그
+function categoryBlog(categoryId=null, page=1){
+    let url = `/api/blog/?page_size=8&page=${page}`;
+    if (categoryId !== null){
+        url = `/api/blog/?category=${categoryId}&page_size=8&page=${page}`;
+    }
+    axiosInstance.get(url)
+    .then(data => data.data)
+        .then(data => {
+            
+            // 블로그 그리드 생성
+            const blogGrid = document.getElementById('blogGrid');
+            // 비우기
+            blogGrid.innerHTML = '';
+            
+            // 없을 경우
+            if (data.data.length === 0){
+                const blogCard = document.createElement('div');
+                blogCard.classList.add('blog-card');
+                const blogName = document.createElement('p');
+                blogName.textContent = '블로그 정보 없음';
+                blogCard.appendChild(blogName);
+                blogGrid.appendChild(blogCard);
+            }
+            
+            data.data.forEach(blog => {
+                const blogCard = document.createElement('div');
+                blogCard.classList.add('blog-card');
+
+                // 이벤트 추가
+                blogCard.addEventListener('click', function() {
+                    window.location.href = `/blog/${blog.id}`;
+                });
+
+                // 블로그 이미지 (이미지가 없는 경우 기본 이미지 또는 원하는 처리)
+                const blogImage = document.createElement('img');
+                blogImage.src = blog.image || 'placeholder_image.jpg'; // 이미지가 없을 경우 placeholder 이미지 설정
+                blogImage.alt = blog.title;
+                blogImage.classList.add('blog-image');
+                blogCard.appendChild(blogImage);
+
+                // 블로그 제목
+                const blogTitle = document.createElement('p');
+                blogTitle.textContent = blog.title;
+                blogCard.appendChild(blogTitle);
+
+
+                blogGrid.appendChild(blogCard);
+            });
+            createPagination('blogPagination', data.current_page, data.page_count, (pageNum) => categoryBlog(categoryId, pageNum));
+        })
+        .catch(error => console.error('Error fetching data:', error));
+}
+
+// 페이지네이션 생성
+function createPagination(containerId, currentPage, totalPages, actionFunction) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = ''; // 기존 페이지네이션 요소 제거
+
+    var startPage = Math.max(1, currentPage - 5);
+    var endPage = Math.min(totalPages, currentPage + 5);
+
+    if (currentPage - startPage < 5) {
+        endPage = Math.min(endPage + (5 - (currentPage - startPage)), totalPages);
+    }
+    if (endPage - currentPage < 5) {
+        startPage = Math.max(startPage - (5 - (endPage - currentPage)), 1);
+    }
+
+    for (var i = startPage; i <= endPage; i++) {
+        const pageButton = document.createElement('a');
+        pageButton.href = '#';
+        pageButton.textContent = i;
+        pageButton.classList.add('pagination-button');
+        if (i === currentPage) {
+            pageButton.classList.add('active');
+        }
+        pageButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            actionFunction(pageButton.textContent);
+        });
+        container.appendChild(pageButton);
+        if (i < endPage) {
+            const spacer = document.createTextNode(' ');
+            container.appendChild(spacer);
+        }
+    }
+}
+
+</script>
+
+
+{% endblock %}

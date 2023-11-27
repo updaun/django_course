@@ -29,7 +29,7 @@ urlpatterns = [
     path("api/category/", include("category.api_ruls")),
     path("auth/", include("users.urls")),
     path("api/blog/", include("blog.api_urls")),
-    path("", views.hello_World),
+    path("", HomeView.as_view()),
     path("api/product/", include("product.api_urls")),
     path("api/brand/", include("brand.api_urls")),
     # path("json/", views.hello_world_json),

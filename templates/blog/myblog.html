@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<h1>나의 블로그</h1>
+
+<div class="grid-container" id="blogGrid"></div>
+<div class="pagination-container" id="blogPagination"></div>
+
+
+<script>
+
+$(document).ready(function() {
+    blogListGrid()
+});
+
+function blogListGrid(pageNum = 1) {
+    axiosInstance.get(`/api/blog/?page=${pageNum}`)
+    .then(data => data.data)
+        .then(data => {
+            
+            // 블로그 그리드 생성
+            const blogGrid = document.getElementById('blogGrid');
+            // 비우기
+            blogGrid.innerHTML = '';
+            
+            // 없을 경우
+            if (data.data.length === 0){
+                const blogCard = document.createElement('div');
+                blogCard.classList.add('blog-card');
+                const blogName = document.createElement('p');
+                blogName.textContent = '블로그 정보 없음';
+                blogCard.appendChild(blogName);
+                blogGrid.appendChild(blogCard);
+            }
+            
+            data.data.forEach(blog => {
+                const blogCard = document.createElement('div');
+                blogCard.classList.add('blog-card');
+
+                // 이벤트 추가
+                blogCard.addEventListener('click', function() {
+                    window.location.href = `/blog/${blog.id}`;
+                });
+
+                // 블로그 이미지 (이미지가 없는 경우 기본 이미지 또는 원하는 처리)
+                const blogImage = document.createElement('img');
+                blogImage.src = blog.image || 'placeholder_image.jpg'; // 이미지가 없을 경우 placeholder 이미지 설정
+                blogImage.alt = blog.title;
+                blogImage.classList.add('blog-image');
+                blogCard.appendChild(blogImage);
+
+                // 블로그 제목
+                const blogTitle = document.createElement('p');
+                blogTitle.textContent = blog.title;
+                blogCard.appendChild(blogTitle);
+
+
+                blogGrid.appendChild(blogCard);
+            });
+            createPagination('blogPagination', data.current_page, data.page_count, (pageNum) => blogListGrid(pageNum));
+        })
+        .catch(error => console.error('Error fetching data:', error));
+}
+
+function createPagination(containerId, currentPage, totalPages, actionFunction) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = ''; // 기존 페이지네이션 요소 제거
+
+    var startPage = Math.max(1, currentPage - 5);
+    var endPage = Math.min(totalPages, currentPage + 5);
+
+    if (currentPage - startPage < 5) {
+        endPage = Math.min(endPage + (5 - (currentPage - startPage)), totalPages);
+    }
+    if (endPage - currentPage < 5) {
+        startPage = Math.max(startPage - (5 - (endPage - currentPage)), 1);
+    }
+
+    for (var i = startPage; i <= endPage; i++) {
+        const pageButton = document.createElement('a');
+        pageButton.href = '#';
+        pageButton.textContent = i;
+        pageButton.classList.add('pagination-button');
+        if (i === currentPage) {
+            pageButton.classList.add('active');
+        }
+        pageButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            actionFunction(pageButton.textContent);
+        });
+        container.appendChild(pageButton);
+        if (i < endPage) {
+            const spacer = document.createTextNode(' ');
+            container.appendChild(spacer);
+        }
+    }
+}
+
+</script>
+
+
+{% endblock %}

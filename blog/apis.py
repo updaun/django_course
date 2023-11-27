@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from blog.models import Blog
 from blog.serializers import BlogSerializer, BlogReadSerializer
 from rest_framework.response import Response
@@ -65,3 +65,15 @@ class BlogViewSet(viewsets.ModelViewSet):
             return Response(status=status.HTTP_403_FORBIDDEN)
         self.perform_destroy(instance)
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class MyBlogListAPI(generics.ListAPIView):
+    queryset = Blog.objects.all().order_by('-id')
+    serializer_class = BlogReadSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        queryset = self.queryset
+        # 내 블로그만 필터링
+        queryset = queryset.filter(user=self.request.user)
+        return queryset
