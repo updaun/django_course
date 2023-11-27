@@ -8,7 +8,7 @@ def read_secret(secret_name):
     return secret
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = read_secret('DJANGO_SECRET_KEY')
+SECRET_KEY = 'django-7!t$i*_145_k-+dsji2j5vuwx&s880)=br*__rxvz5cjyh%2('
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
