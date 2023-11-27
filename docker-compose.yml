@@ -1,0 +1,65 @@
+version: "3.7"
+services:
+  nginx:
+    image: nginx:1.19.5
+    ports:
+      - mode: host
+        protocol: tcp
+        target: 80
+        published: 80
+    networks:
+      - network
+    volumes:
+      - /home/django_course/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - static_volume:/data/static
+    depends_on:
+      - django_container
+
+  
+  django_container:
+    image: django_course:v1.0.0
+    networks:
+      - network
+    volumes:
+      - static_volume:/home/django_course/staticfiles
+    secrets:
+      - DJANGO_SECRET_KEY
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+
+  postgresdb:
+    image: postgres:13.11
+    networks:
+      - network
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_database:/var/lib/postgresql/data
+    secrets:
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+    environment:
+      - POSTGRES_DB_FILE=/run/secrets/POSTGRES_DB
+      - POSTGRES_USER_FILE=/run/secrets/POSTGRES_USER
+      - POSTGRES_PASSWORD_FILE=/run/secrets/POSTGRES_PASSWORD
+
+
+networks:
+  network:
+  
+
+volumes:
+  postgres_database:
+  static_volume:
+
+secrets:
+  DJANGO_SECRET_KEY:
+    external: true
+  POSTGRES_DB:
+    external: true
+  POSTGRES_USER:
+    external: true
+  POSTGRES_PASSWORD:
+    external: true

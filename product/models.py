@@ -1,4 +1,5 @@
 from django.db import models
+import random
 
 
 class Product(models.Model):
@@ -12,3 +13,12 @@ class Product(models.Model):
 
     class Meta:
         unique_together = ["name", "brand"]
+    
+    def save(self, *args, **kwargs):
+
+        # 처음 생성될 떄, 이미지에 값이 없을 경우, 더미 데이터를 넣어준다.
+        if not self.id and not self.image:
+            random_number = random.randint(1, 10000)
+            self.image = f"https://picsum.photos/500?random={random_number}"
+
+            super().save(*args, **kwargs)
