@@ -39,7 +39,7 @@ function submitForm() {
 
   axiosInstance.post('/api/auth/signup/', data)
     .then(function (response) {
-
+      
       window.location.href = '/auth/login/';
       // 여기에서 로그인 성공 시의 추가 작업을 수행할 수 있습니다.
     })
