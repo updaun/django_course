@@ -4,7 +4,7 @@ RUN echo "Django Course deploy 2023.11.21 21:00"
 
 WORKDIR /home/
 
-RUN git clone https://github.com/updaun/django_course.git -b jdu
+RUN git clone https://github.com/updaun/django_course.git -b kmgyu
 
 WORKDIR /home/django_course/
 
