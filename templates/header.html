@@ -1,10 +1,17 @@
 <div class="header">
-    <h1>DjangoCourse</h1>
+    <div class="logo">
+        <a href = "/">
+            <h1>DjangoCourse</h1>
+        </a>
+    </div>
     <div class="user-actions">
     {% if user.is_authenticated %}
-        <a href="/api-auth/logout/">로그아웃</a>
+        <a href="/blog/create/">NewBlog</a>
+        <a href="/blog/my/">MyBlog</a>
+        <a href="/todo/list/">MyTodo</a>
+        <a href="/api-auth/logout/">LogOut</a>
     {% else %}
-        <a href="/api-auth/login/">로그인</a>
+        <a href="/api-auth/login/">Login</a>
     {% endif %}
     </div>
     

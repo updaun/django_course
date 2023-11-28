@@ -20,13 +20,21 @@ from django.conf.urls import url
 from django.conf.urls.static import static
 from django.conf import settings
 
+# http://127.0.0.1:8000/
 
 urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('admin/', admin.site.urls),
-    path("", views.hello_world), # 127.0.0.1:8000/
+    path("", views.HomeView.as_view()), # 127.0.0.1:8000/
+    path("api/category/", include("category.api_urls")),
+    path("api/auth/", include("users.api_urls")),
+    path("api/blog/", include("blog.api_urls")),
+    path("api/product/", include("product.api_urls")),
+    path("api/brand/", include("brand.api_urls")),
     path("api/todo/", include("todo.api_urls")),
+    path("blog/", include("blog.urls")),
     path("todo/", include("todo.urls")), # 127.0.0.1:8000/todo/
+    path("auth/", include("users.urls")), # 127.0.0.1:8000/todo/
     path("random/template/", views.RandomNumberTemplateView.as_view()),
     path("random/view/", views.RandomNumberView.as_view()),
     # 127.0.0.1:8000/api-auth/login/
