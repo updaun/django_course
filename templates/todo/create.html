@@ -29,15 +29,17 @@
 
 
     <script>
+        CKEDITOR.replace('description');
         // 버튼이 클릭된다면
         $("#todoCreate").on("click", function() {
             let exp = $("#exp").val();
             if (exp === ""){
                 exp = 0;
             }
+            let description = CKEDITOR.instances['description'].getData();
             axiosInstance.post("/api/todo/viewsets/", {
                 name: $("#name").val(),
-                description: $("#description").val(),
+                description: description,
                 complete: $("#complete").prop("checked"),
                 exp: exp,
             })

@@ -29,7 +29,7 @@
 
 
     <script>
-
+        CKEDITOR.replace('description');
         // 페이지 로드시 값을 넣어준다.
         $(document).ready(function(){
             let pk = window.location.href.split('/').filter(Boolean).pop()
@@ -49,9 +49,10 @@
         // 버튼이 클릭된다면
         $("#todoUpdate").on("click", function() {
             let pk = window.location.href.split('/').filter(Boolean).pop();
+            let description = CKEDITOR.instances['description'].getData();
             axiosInstance.patch(`/api/todo/viewsets/${pk}/`, {
                 name: $("#name").val(),
-                description: $("#description").val(),
+                description: description,
                 complete: $("#complete").prop("checked"),
                 exp: $("#exp").val(),
             })
