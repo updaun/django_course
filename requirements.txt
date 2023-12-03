@@ -6,3 +6,6 @@ pyjwt==2.8.0
 # deploy
 gunicorn==20.1.0
 psycopg2-binary==2.9.6
+
+# ckeditor
+django-ckeditor
