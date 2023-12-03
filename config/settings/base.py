@@ -40,6 +40,8 @@ THIRD_PARTY_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 INSTALLED_APPS = CUSTOM_APPS + THIRD_PARTY_APPS
@@ -128,6 +130,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = "/auth/login/"
 LOGIN_REDIRECT_URL = "/todo/list/"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CKEDITOR_UPLOAD_PATH = 'uploads/ckeditor/'
 LOGOUT_REDIRECT_URL = "/auth/login/"
 
 AUTH_USER_MODEL = "users.User"

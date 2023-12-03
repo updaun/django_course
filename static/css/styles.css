@@ -4,17 +4,16 @@ body {
     font-size: 20px;
 }
 
-.container {
-    max-width: 500px;
-    margin: 0 auto;
-}
 
 label {
     display: block;
     font-weight: bold;
 }
 
-.container .todocontainer {
+.container,
+.todocontainer {
+    /* max-width: 800px; */
+    width: 80%;
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
