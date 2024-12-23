@@ -11,3 +11,7 @@ class Todo(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def save(self, *arg, **kwarg):
+        if self.complete and self.completed_at is None:
+            self.completed_at = timezone()
